@@ -1,7 +1,7 @@
 package investmentmanager.entity;
 
 import java.util.HashMap;
-
+/*Investment fund class*/
 class InvestmentFund {
 	private static int idCounter = 0;
 	private int id;
@@ -22,6 +22,7 @@ class InvestmentFund {
 	}
 	
 	private double calculatePercentage(Stock stock) {
+		/*Calculate the percentage of each stock from the fund stocks*/
 		if (!stocks.containsKey(stock)) {
 			return 0;
 		}
@@ -33,6 +34,7 @@ class InvestmentFund {
 	}
 
 	public double calculateFundPrice() {
+		/*Calculate unit fund price*/
 		double price = 0;
 		for (Stock stock : stocks.keySet()) {
 			price += stock.getPrice() * calculatePercentage(stock);

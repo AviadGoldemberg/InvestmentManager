@@ -2,7 +2,7 @@ package investmentmanager.entity;
 
 import java.util.Random;
 
-
+/*Class for stock*/
 public class Stock {
 	private static int idCounter = 0;
 	private double price;
@@ -22,10 +22,8 @@ public class Stock {
 	}
 	
 	public void changeStockPrice() {
-		price = price * (1-risk + rnd.nextDouble());
-		if (price < 0) {
-			price = 0;
-		}
+		/*change the price according to the risk*/
+		price = price * (1-risk + rnd.nextDouble()*(2*risk));
 	}
 	
 	public double getPrice() {

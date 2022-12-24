@@ -1,7 +1,7 @@
 package investmentmanager.entity;
 
 import java.util.HashMap;
-
+/*Investor class*/
 public class Investor {
 	private static int idCounter = 0;
 	private int investorId;
@@ -19,6 +19,7 @@ public class Investor {
 	}
 	
 	public double investorValue() {
+		/*Calculate current value of investor */
 		double value = 0;
 		for (InvestmentFund fund : investments.keySet()) {
 			value += fund.calculateFundPrice() * investments.get(fund);
@@ -27,7 +28,7 @@ public class Investor {
 	}
 
 	public void buyUnits(InvestmentFund fund, int units) {
-
+		/*Buy Investment Fund units*/
 		double moneyToSpend = fund.calculateFundPrice() * units;
 		if (availableMoney > moneyToSpend) {
 			availableMoney -= moneyToSpend;
@@ -42,7 +43,7 @@ public class Investor {
 	}
 
 	public void sellUnits(InvestmentFund fund, int units) {
-		
+		/*Sell Investment Fund units*/
 		if(investments.containsKey(fund)) {
 			if(units < investments.get(fund)) {
 				availableMoney += fund.calculateFundPrice() * units;
