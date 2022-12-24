@@ -1,0 +1,72 @@
+package investmentmanager.entity;
+
+import java.util.HashMap;
+
+public class Investor {
+	private static int idCounter = 0;
+	private int investorId;
+	private String name;
+	private HashMap<InvestmentFund, Integer> investments;
+	private double availableMoney;
+
+	public Investor(String name, double money) {
+		this.name = name;
+		availableMoney = money;
+		investorId = idCounter;
+		idCounter++;
+		investments = new HashMap<InvestmentFund, Integer>();
+
+	}
+	
+	public double investorValue() {
+		double value = 0;
+		for (InvestmentFund fund : investments.keySet()) {
+			value += fund.calculateFundPrice() * investments.get(fund);
+		}
+		return value;
+	}
+
+	public void buyUnits(InvestmentFund fund, int units) {
+
+		double moneyToSpend = fund.calculateFundPrice() * units;
+		if (availableMoney > moneyToSpend) {
+			availableMoney -= moneyToSpend;
+			if (investments.containsKey(fund)) {
+				investments.put(fund, investments.get(fund) + units);
+			} else {
+				investments.put(fund, units);
+			}
+		} else {
+			// build custom exception
+		}
+	}
+
+	public void sellUnits(InvestmentFund fund, int units) {
+		
+		if(investments.containsKey(fund)) {
+			if(units < investments.get(fund)) {
+				availableMoney += fund.calculateFundPrice() * units;
+				investments.put(fund, investments.get(fund) - units);
+			}
+			else if (units == investments.get(fund)) {
+				availableMoney += fund.calculateFundPrice() * units;
+				investments.remove(fund);
+			}
+			else {
+				//custom exception
+			}
+		}
+		else {
+			// custom exception
+		}
+	}
+
+	public int getInvestorId() {
+		return investorId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+}

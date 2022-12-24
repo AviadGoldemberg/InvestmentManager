@@ -40,4 +40,8 @@ class InvestmentFund {
 		return price;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 }
