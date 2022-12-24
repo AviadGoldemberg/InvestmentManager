@@ -14,9 +14,13 @@ class InvestmentFund {
 	}
 
 	public void addStock(Stock stock, int amount) {
-
+		stocks.put(stock, amount);
 	}
-
+	
+	public void removeStock(Stock stock) {
+		stocks.remove(stock);
+	}
+	
 	private double calculatePercentage(Stock stock) {
 		if (!stocks.containsKey(stock)) {
 			return 0;
