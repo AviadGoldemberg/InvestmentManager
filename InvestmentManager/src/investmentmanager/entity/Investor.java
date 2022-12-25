@@ -3,7 +3,8 @@ package investmentmanager.entity;
 import java.util.HashMap;
 
 /*Investor class*/
-public class Investor implements Comparable<Investor>{
+public class Investor implements Comparable<Investor> {
+
 	private static int idCounter = 0;
 	private int investorId;
 	private String name;
@@ -18,9 +19,9 @@ public class Investor implements Comparable<Investor>{
 		investments = new HashMap<InvestmentFund, Integer>();
 
 	}
-	
+
 	public double investorValue() {
-		/*Calculate current value of investor */
+		/* Calculate current value of investor */
 		double value = 0;
 		for (InvestmentFund fund : investments.keySet()) {
 			value += fund.calculateFundPrice() * investments.get(fund);
@@ -29,7 +30,7 @@ public class Investor implements Comparable<Investor>{
 	}
 
 	public void buyUnits(InvestmentFund fund, int units) {
-		/*Buy Investment Fund units*/
+		/* Buy Investment Fund units */
 		double moneyToSpend = fund.calculateFundPrice() * units;
 		if (availableMoney > moneyToSpend) {
 			availableMoney -= moneyToSpend;
@@ -44,21 +45,18 @@ public class Investor implements Comparable<Investor>{
 	}
 
 	public void sellUnits(InvestmentFund fund, int units) {
-		/*Sell Investment Fund units*/
-		if(investments.containsKey(fund)) {
-			if(units < investments.get(fund)) {
+		/* Sell Investment Fund units */
+		if (investments.containsKey(fund)) {
+			if (units < investments.get(fund)) {
 				availableMoney += fund.calculateFundPrice() * units;
 				investments.put(fund, investments.get(fund) - units);
-			}
-			else if (units == investments.get(fund)) {
+			} else if (units == investments.get(fund)) {
 				availableMoney += fund.calculateFundPrice() * units;
 				investments.remove(fund);
+			} else {
+				// custom exception
 			}
-			else {
-				//custom exception
-			}
-		}
-		else {
+		} else {
 			// custom exception
 		}
 	}
@@ -76,11 +74,28 @@ public class Investor implements Comparable<Investor>{
 		double dif = investorValue() - o.investorValue();
 		if (dif > 0) {
 			return 1;
-		}
-		else if (dif == 0){
+		} else if (dif == 0) {
 			return 0;
 		}
 		return -1;
+	}
+
+	@Override
+	public String toString() {
+		return "Investor [investorId=" + investorId + ", name=" + name + ", investments=" + investments
+				+ ", availableMoney=" + availableMoney + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Investor other = (Investor) obj;
+		return investorId == other.investorId;
 	}
 
 }
