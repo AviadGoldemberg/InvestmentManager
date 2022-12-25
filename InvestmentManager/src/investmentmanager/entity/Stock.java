@@ -11,11 +11,13 @@ public class Stock implements Comparable<Stock> {
 	private double risk;
 	private Random rnd;
 
-	private Stock(String company, double initialPrice, double stockRisk) {
+	private Stock(String company, double initialPrice, double stockRisk) throws RiskNotValidException {
 		stockId = idCounter;
 		idCounter++;
 		this.company = company;
 		price = initialPrice;
+		if (stockRisk < 0 || stockRisk > 1)
+			throw new RiskNotValidException("Given risk is not valid (1 > risk > 0 )");
 		risk = stockRisk;
 		rnd = new Random();
 

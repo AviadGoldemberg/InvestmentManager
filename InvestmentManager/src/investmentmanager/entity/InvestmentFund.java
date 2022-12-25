@@ -31,8 +31,13 @@ class InvestmentFund implements Comparable<InvestmentFund> {
 		return id == other.id;
 	}
 
-	public void removeStock(Stock stock) {
-		stocks.remove(stock);
+	public void removeStock(Stock stock) throws StockNotExistException {
+		if(stocks.containsKey(stock)) {
+			stocks.remove(stock);
+		}
+		else {
+			throw new StockNotExistException("this stock dosen't exist in this fund");
+		}
 	}
 
 	private double calculatePercentage(Stock stock) {

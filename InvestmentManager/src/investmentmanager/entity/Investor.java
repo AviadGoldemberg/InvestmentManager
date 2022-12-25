@@ -29,10 +29,10 @@ public class Investor implements Comparable<Investor> {
 		return value + availableMoney;
 	}
 
-	public void buyUnits(InvestmentFund fund, int units) {
+	public void buyUnits(InvestmentFund fund, int units) throws NotEnoughMoneyToSpendException {
 		/* Buy Investment Fund units */
 		double moneyToSpend = fund.calculateFundPrice() * units;
-		if (availableMoney > moneyToSpend) {
+		if (availableMoney >= moneyToSpend) {
 			availableMoney -= moneyToSpend;
 			if (investments.containsKey(fund)) {
 				investments.put(fund, investments.get(fund) + units);
@@ -40,11 +40,11 @@ public class Investor implements Comparable<Investor> {
 				investments.put(fund, units);
 			}
 		} else {
-			// build custom exception
+			throw new NotEnoughMoneyToSpendException("The investor doesn't has enough money to spend on this buy");
 		}
 	}
 
-	public void sellUnits(InvestmentFund fund, int units) {
+	public void sellUnits(InvestmentFund fund, int units) throws NotEnoughUnitsException, FundNotExistException {
 		/* Sell Investment Fund units */
 		if (investments.containsKey(fund)) {
 			if (units < investments.get(fund)) {
@@ -54,10 +54,10 @@ public class Investor implements Comparable<Investor> {
 				availableMoney += fund.calculateFundPrice() * units;
 				investments.remove(fund);
 			} else {
-				// custom exception
+				throw new NotEnoughUnitsException(name + " doesn't has "+  units + " to sell.");
 			}
 		} else {
-			// custom exception
+			throw new FundNotExistException(name + " doesn't has any units in this fund");
 		}
 	}
 
