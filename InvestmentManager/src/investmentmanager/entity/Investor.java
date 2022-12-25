@@ -1,8 +1,9 @@
 package investmentmanager.entity;
 
 import java.util.HashMap;
+
 /*Investor class*/
-public class Investor {
+public class Investor implements Comparable<Investor>{
 	private static int idCounter = 0;
 	private int investorId;
 	private String name;
@@ -24,7 +25,7 @@ public class Investor {
 		for (InvestmentFund fund : investments.keySet()) {
 			value += fund.calculateFundPrice() * investments.get(fund);
 		}
-		return value;
+		return value + availableMoney;
 	}
 
 	public void buyUnits(InvestmentFund fund, int units) {
@@ -68,6 +69,18 @@ public class Investor {
 
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public int compareTo(Investor o) {
+		double dif = investorValue() - o.investorValue();
+		if (dif > 0) {
+			return 1;
+		}
+		else if (dif == 0){
+			return 0;
+		}
+		return -1;
 	}
 
 }

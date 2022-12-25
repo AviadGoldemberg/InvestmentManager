@@ -3,7 +3,7 @@ package investmentmanager.entity;
 import java.util.Random;
 
 /*Class for stock*/
-public class Stock {
+public class Stock implements Comparable<Stock>{
 	private static int idCounter = 0;
 	private double price;
 	private int stockId;
@@ -41,6 +41,17 @@ public class Stock {
 	public String getCompany() {
 		return company;
 	}
+
+	@Override
+	public int compareTo(Stock o) {
+		double dif = price - o.price;
+		if (dif > 0) {
+			return 1;
+		}
+		else if (dif == 0){
+			return 0;
+		}
+		return -1;	}
  
 	
 	

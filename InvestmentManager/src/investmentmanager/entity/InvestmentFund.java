@@ -2,7 +2,7 @@ package investmentmanager.entity;
 
 import java.util.HashMap;
 /*Investment fund class*/
-class InvestmentFund {
+class InvestmentFund implements Comparable<InvestmentFund>{
 	private static int idCounter = 0;
 	private int id;
 	private HashMap<Stock, Integer> stocks; // Stock, percentage
@@ -46,4 +46,18 @@ class InvestmentFund {
 		return id;
 	}
 
+	@Override
+	public int compareTo(InvestmentFund o) {
+		double dif = calculateFundPrice() - o.calculateFundPrice();
+		if (dif > 0) {
+			return 1;
+		}
+		else if (dif == 0){
+			return 0;
+		}
+		return -1;
+	}
+
+	
+	
 }
