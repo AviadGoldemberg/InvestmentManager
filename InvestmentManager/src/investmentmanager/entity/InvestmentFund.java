@@ -3,7 +3,7 @@ package investmentmanager.entity;
 import java.util.HashMap;
 
 /*Investment fund class*/
-public class InvestmentFund implements Entity{
+public class InvestmentFund extends Entity{
 
 	private static int idCounter = 0;
 	private int id;
@@ -78,18 +78,6 @@ public class InvestmentFund implements Entity{
 		return "InvestmentFund [id=" + id + ", " + str + "]";
 	}
 
-	// compare the investment fund to another 
-	@Override
-	public int compareTo(Entity o) {
-		InvestmentFund investmentFund = (InvestmentFund) o;
-		double dif = calculateFundPrice() - investmentFund.calculateFundPrice();
-		if (dif > 0) {
-			return 1;
-		} else if (dif == 0) {
-			return 0;
-		}
-		return -1;
-	}
 
 	@Override
 	public double getValue() {

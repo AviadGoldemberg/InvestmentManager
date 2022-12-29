@@ -4,7 +4,7 @@ package investmentmanager.entity;
 import java.util.HashMap;
 
 /*Investor class*/
-public class Investor implements Entity {
+public class Investor extends Entity {
 
 	private static int idCounter = 0;
 	private int investorId;
@@ -12,10 +12,11 @@ public class Investor implements Entity {
 	private HashMap<InvestmentFund, Integer> investments;
 	private double availableMoney;
 
-	public Investor(String name, double money) {
+	public Investor(String name, double money) throws NegativeInitialMoneyException {
 		this.name = name;
+		if(money < 0 )
+			throw new NegativeInitialMoneyException("The initial money of investor can't be negative.");
 		availableMoney = money;
-		// TODO: custom exc
 		investorId = idCounter;
 		idCounter++;
 		investments = new HashMap<InvestmentFund, Integer>();
@@ -87,17 +88,7 @@ public class Investor implements Entity {
 		return investorId == other.investorId;
 	}
 
-	@Override
-	public int compareTo(Entity o) {
-		Investor investor = (Investor) o;
-		double dif = investorValue() - investor.investorValue();
-		if (dif > 0) {
-			return 1;
-		} else if (dif == 0) {
-			return 0;
-		}
-		return -1;
-	}
+	
 
 	@Override
 	public int getId() {

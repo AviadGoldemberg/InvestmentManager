@@ -2,7 +2,7 @@ package investmentmanager.entity;
 
 import java.util.Random;
 /*Class for stock*/
-public class Stock implements  Entity{
+public class Stock extends Entity{
 	private static int idCounter = 0;
 	private double price;
 	private int stockId;
@@ -52,25 +52,10 @@ public class Stock implements  Entity{
 		return risk;
 	}
 
-	public int getStockId() {
-		return stockId;
-	}
-
 	public String getCompany() {
 		return company;
 	}
 
-	@Override
-	public int compareTo(Entity o) {
-		Stock stock = (Stock)o;
-		double dif = price - stock.price;
-		if (dif > 0) {
-			return 1;
-		} else if (dif == 0) {
-			return 0;
-		}
-		return -1;
-	}
 
 	@Override
 	public int getId() {
@@ -79,8 +64,7 @@ public class Stock implements  Entity{
 
 	@Override
 	public double getValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return price;
 	}
 
 }

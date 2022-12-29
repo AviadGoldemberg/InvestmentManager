@@ -111,16 +111,21 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 		else {
 			entityList = al.get(2);
 		}
-
-		for (int i = 0; i < entityList.size(); i++) {
-			if (entityList.get(i).getId() == t.getId()) {
-				entityList.remove(i);
-				entityList.add(i, t);
-				break;
+		if (entityList.contains((Object)t))
+		{
+			for (int i = 0; i < entityList.size(); i++) {
+				if (entityList.get(i).getId() == t.getId()) {
+					entityList.remove(i);
+					entityList.add(i, t);
+					break;
+				}
 			}
+			// writing to the file the new arrayList
+			writeToFile(al);
 		}
-		// writing to the file the new arrayList
-		writeToFile(al);
+		else {
+			// TODO : custom exception
+		}
 
 	}
 
@@ -142,6 +147,8 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 			entityList = al.get(2);
 
 		}
+		
+
 		for (int i = 0; i < entityList.size(); i++) {
 			if (entityList.get(i).getId() == id) {
 				entityList.remove(i);
@@ -150,8 +157,8 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 		}
 		// writing to the file the new arrayList
 		writeToFile(al);
-
 	}
+	
 
 	@Override
 	public Entity get(int id, Class c) throws Exception {
