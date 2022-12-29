@@ -3,7 +3,7 @@ package investmentmanager.entity;
 import java.util.HashMap;
 
 /*Investment fund class*/
-class InvestmentFund implements Comparable<InvestmentFund> {
+public class InvestmentFund implements Entity{
 
 	private static int idCounter = 0;
 	private int id;
@@ -19,6 +19,7 @@ class InvestmentFund implements Comparable<InvestmentFund> {
 		stocks.put(stock, amount);
 	}
 
+	//equals method
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -31,6 +32,7 @@ class InvestmentFund implements Comparable<InvestmentFund> {
 		return id == other.id;
 	}
 
+	// function removes stock from the investment fund
 	public void removeStock(Stock stock) throws StockNotExistException {
 		if(stocks.containsKey(stock)) {
 			stocks.remove(stock);
@@ -39,7 +41,7 @@ class InvestmentFund implements Comparable<InvestmentFund> {
 			throw new StockNotExistException("this stock dosen't exist in this fund");
 		}
 	}
-
+	
 	private double calculatePercentage(Stock stock) {
 		/* Calculate the percentage of each stock from the fund stocks */
 		if (!stocks.containsKey(stock)) {
@@ -51,6 +53,7 @@ class InvestmentFund implements Comparable<InvestmentFund> {
 		}
 		return (double) sum / stocks.get(stock);
 	}
+
 
 	public double calculateFundPrice() {
 		/* Calculate unit fund price */
@@ -65,9 +68,21 @@ class InvestmentFund implements Comparable<InvestmentFund> {
 		return id;
 	}
 
+
 	@Override
-	public int compareTo(InvestmentFund o) {
-		double dif = calculateFundPrice() - o.calculateFundPrice();
+	public String toString() {
+		String str = "stocks = ";
+		for (Stock stock : stocks.keySet()) {
+			str += stock.toString() + " --> " + stocks.get(stock) + ", ";
+		}
+		return "InvestmentFund [id=" + id + ", " + str + "]";
+	}
+
+	// compare the investment fund to another 
+	@Override
+	public int compareTo(Entity o) {
+		InvestmentFund investmentFund = (InvestmentFund) o;
+		double dif = calculateFundPrice() - investmentFund.calculateFundPrice();
 		if (dif > 0) {
 			return 1;
 		} else if (dif == 0) {
@@ -77,12 +92,8 @@ class InvestmentFund implements Comparable<InvestmentFund> {
 	}
 
 	@Override
-	public String toString() {
-		String str = "stocks = ";
-		for (Stock stock : stocks.keySet()) {
-			str += stock.toString() + " --> " + stocks.get(stock) + ", ";
-		}
-		return "InvestmentFund [id=" + id + ", " + str + "]";
+	public double getValue() {
+		return calculateFundPrice();
 	}
 
 }

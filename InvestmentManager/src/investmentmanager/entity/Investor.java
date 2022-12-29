@@ -1,9 +1,10 @@
 package investmentmanager.entity;
 
+
 import java.util.HashMap;
 
 /*Investor class*/
-public class Investor implements Comparable<Investor> {
+public class Investor implements Entity {
 
 	private static int idCounter = 0;
 	private int investorId;
@@ -14,6 +15,7 @@ public class Investor implements Comparable<Investor> {
 	public Investor(String name, double money) {
 		this.name = name;
 		availableMoney = money;
+		// TODO: custom exc
 		investorId = idCounter;
 		idCounter++;
 		investments = new HashMap<InvestmentFund, Integer>();
@@ -61,24 +63,11 @@ public class Investor implements Comparable<Investor> {
 		}
 	}
 
-	public int getInvestorId() {
-		return investorId;
-	}
 
 	public String getName() {
 		return name;
 	}
 
-	@Override
-	public int compareTo(Investor o) {
-		double dif = investorValue() - o.investorValue();
-		if (dif > 0) {
-			return 1;
-		} else if (dif == 0) {
-			return 0;
-		}
-		return -1;
-	}
 
 	@Override
 	public String toString() {
@@ -96,6 +85,28 @@ public class Investor implements Comparable<Investor> {
 			return false;
 		Investor other = (Investor) obj;
 		return investorId == other.investorId;
+	}
+
+	@Override
+	public int compareTo(Entity o) {
+		Investor investor = (Investor) o;
+		double dif = investorValue() - investor.investorValue();
+		if (dif > 0) {
+			return 1;
+		} else if (dif == 0) {
+			return 0;
+		}
+		return -1;
+	}
+
+	@Override
+	public int getId() {
+		return investorId;
+	}
+
+	@Override
+	public double getValue() {
+		return investorValue();
 	}
 
 }

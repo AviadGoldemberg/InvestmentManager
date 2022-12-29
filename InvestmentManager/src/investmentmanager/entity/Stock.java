@@ -1,9 +1,8 @@
 package investmentmanager.entity;
 
 import java.util.Random;
-
 /*Class for stock*/
-public class Stock implements Comparable<Stock> {
+public class Stock implements  Entity{
 	private static int idCounter = 0;
 	private double price;
 	private int stockId;
@@ -62,14 +61,26 @@ public class Stock implements Comparable<Stock> {
 	}
 
 	@Override
-	public int compareTo(Stock o) {
-		double dif = price - o.price;
+	public int compareTo(Entity o) {
+		Stock stock = (Stock)o;
+		double dif = price - stock.price;
 		if (dif > 0) {
 			return 1;
 		} else if (dif == 0) {
 			return 0;
 		}
 		return -1;
+	}
+
+	@Override
+	public int getId() {
+		return stockId;
+	}
+
+	@Override
+	public double getValue() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
