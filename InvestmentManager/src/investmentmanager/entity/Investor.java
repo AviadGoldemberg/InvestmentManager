@@ -99,5 +99,9 @@ public class Investor extends Entity {
 	public double getValue() {
 		return investorValue();
 	}
+	
+	public HashMap<InvestmentFund, Integer> getHashMap(){
+		return investments;
+	}
 
 }

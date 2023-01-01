@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,9 @@ import investmentmanager.entity.Entity;
 public class InvestmentManagerFileDao implements InvestmentManagerDao {
 
 	private static String FILE_NAME = "InvestmentsData";
+	public final static int stock = 0;
+	public final static int investor = 1;
+	public final static int fund = 2;
 
 	public ArrayList<ArrayList<Entity>> readFromFile() throws Exception {
 		// this func reads from the file the arraylist
@@ -78,15 +82,15 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 		ArrayList<Entity> entityList;
 		// t is Stock
 		if (t instanceof Stock) {
-			entityList = al.get(0);
+			entityList = al.get(stock);
 		}
 		// t is Investor
 		else if (t instanceof Investor) {
-			entityList = al.get(1);
+			entityList = al.get(investor);
 		}
 		// t is InvestmentFund
 		else {
-			entityList = al.get(2);
+			entityList = al.get(fund);
 		}
 		entityList.add(t);
 		Collections.sort(entityList);
@@ -101,15 +105,15 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 		ArrayList<Entity> entityList;
 		// t is Stock
 		if (t instanceof Stock) {
-			entityList = al.get(0);
+			entityList = al.get(stock);
 		}
 		// t is Investor
 		else if (t instanceof Investor) {
-			entityList = al.get(1);
+			entityList = al.get(investor);
 		}
 		// t is InvestmentFund
 		else {
-			entityList = al.get(2);
+			entityList = al.get(fund);
 		}
 		if (entityList.contains((Object)t))
 		{
@@ -124,7 +128,7 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 			writeToFile(al);
 		}
 		else {
-			// TODO : custom exception
+			throw new EntityNotExistInSystemException("System doen't have this entity.");
 		}
 
 	}
@@ -136,15 +140,15 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 		ArrayList<Entity> entityList;
 		// the class is stock
 		if (c == Stock.class) {
-			entityList = al.get(0);
+			entityList = al.get(stock);
 		}
 		// the class is investor
 		else if (c == Investor.class) {
-			entityList = al.get(1);
+			entityList = al.get(investor);
 		}
 		// the class is investmentFund
 		else {
-			entityList = al.get(2);
+			entityList = al.get(fund);
 
 		}
 		
@@ -167,15 +171,15 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 		ArrayList<Entity> entityList;
 		// the class is stock
 		if (c == Stock.class) {
-			entityList = al.get(0);
+			entityList = al.get(stock);
 		}
 		// the class is investor
 		else if (c == Investor.class) {
-			entityList = al.get(1);
+			entityList = al.get(investor);
 		}
 		// the class is investmentFund
 		else {
-			entityList = al.get(2);
+			entityList = al.get(fund);
 
 		}
 		for (int i = 0; i < entityList.size(); i++) {
@@ -185,7 +189,7 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 			}
 		}
 		// if nothing matched
-		return null;
+		throw new EntityNotExistInSystemException("Id not exist.");
 	}
 
 }
