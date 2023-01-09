@@ -9,11 +9,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 // import the entities
 import investmentmanager.entity.Investor;
 import investmentmanager.entity.Stock;
 import investmentmanager.entity.Entity;
-
+@Component
 public class InvestmentManagerFileDao implements InvestmentManagerDao {
 
 	private static String FILE_NAME = "InvestmentsData";
@@ -128,7 +131,7 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 			writeToFile(al);
 		}
 		else {
-			throw new EntityNotExistInSystemException("System doen't have this entity.");
+			throw new EntityNotExistInSystemException("Entity does not exist --> " + t);
 		}
 
 	}
@@ -189,7 +192,7 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 			}
 		}
 		// if nothing matched
-		throw new EntityNotExistInSystemException("Id not exist.");
+		throw new EntityNotExistInSystemException("Id not exist --> " + id + " of entity --> " + c.getClass());
 	}
 
 }

@@ -44,6 +44,7 @@ public class InvestmentsCLI {
 			int code = -1;
 			int id = -1;
 			Entity e = null;
+			int units = 0;
 			try {
 				switch (userInput) {
 				case SHOW_ENTITYS:
@@ -114,6 +115,71 @@ public class InvestmentsCLI {
 					investmentManager.save(e);
 					break;
 				case UPDATE_ENTITY:
+					//update entity
+					System.out.println("Enter entity:\n0 to update stock price\n1 to investor buy, sell units or add, remove fund\n2 to fund for add,remove stocks");
+					code = scanner.nextInt();
+					e = null;
+					System.out.println("Enter entity id: ");
+					id = scanner.nextInt();
+					switch (code) {
+					case InvestmentManagerFileDao.stock:
+						Stock stock = (Stock) investmentManager.get(id, Stock.class);
+						stock.changeStockPrice();
+						System.out.println("Stock price updated!");
+						e = stock;
+						break;
+					case InvestmentManagerFileDao.investor:
+						Investor investor = (Investor)investmentManager.get(id, Investor.class);
+						System.out.println("Enter 1 to buy\nEnter 2 to sell\nEnter 3 to remove\nEnter code: ");
+						code = scanner.nextInt();
+						System.out.println("Enter fund id: ");
+						id = scanner.nextInt();
+						System.out.println("Enter units: ");
+						units = scanner.nextInt();
+						switch (code) {
+						case 1:
+							investor.buyUnits((InvestmentFund)investmentManager.get(id, InvestmentFund.class), units);
+							break;
+						case 2:
+							investor.sellUnits((InvestmentFund)investmentManager.get(id, InvestmentFund.class), units);
+							break;
+						default:
+							System.out.println("Please enter valid input.");
+							break;
+						}
+						e = investor;
+						break;
+					case InvestmentManagerFileDao.fund:
+						InvestmentFund fund = (InvestmentFund)investmentManager.get(id, InvestmentFund.class);
+						System.out.println("Enter 1 to add stock.\nEnter 2 to remove stock.");
+						code = scanner.nextInt();
+						System.out.println("Enter fund id: ");
+						id = scanner.nextInt();
+						switch (code) {
+						case 1:
+							// add stock to fund
+							System.out.println("Enter stock id: ");
+							id = scanner.nextInt();
+							Stock stock2 = (Stock)investmentManager.get(id, Stock.class);
+							fund.removeStock(stock2);
+							break;
+						case 2:
+							// remove stock
+							System.out.println("Enter stock id: ");
+							id = scanner.nextInt();
+							Stock stock3 = (Stock)investmentManager.get(id, Stock.class);
+							fund.removeStock(stock3);
+						default:
+							System.out.println("Please enter valid input.");
+							break;
+						}
+						e = fund;
+						break;
+					default:
+						System.out.println("Please enter valid input.");
+						break;
+					}
+
 					investmentManager.update(e);
 					break;
 				case DELETE_ENTITY:

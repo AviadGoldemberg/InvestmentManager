@@ -1,5 +1,6 @@
 package investmentmanager.entity;
 
+import java.util.Objects;
 import java.util.Random;
 /*Class for stock*/
 public class Stock extends Entity{
@@ -8,7 +9,7 @@ public class Stock extends Entity{
 	private int stockId;
 	private String company;
 	private double risk;
-	private Random rnd;
+	private static Random rnd;
 
 	public Stock(String company, double initialPrice, double stockRisk) {
 		stockId = idCounter;
@@ -23,6 +24,13 @@ public class Stock extends Entity{
 	@Override
 	public String toString() {
 		return "Stock [price=" + price + ", stockId=" + stockId + ", company=" + company + ", risk=" + risk + "]";
+	}
+
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(stockId);
 	}
 
 	@Override

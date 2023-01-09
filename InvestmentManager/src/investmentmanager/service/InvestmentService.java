@@ -55,7 +55,7 @@ public class InvestmentService implements Manageable {
 		if (t instanceof Investor) {
 			Investor investor = (Investor) t;
 			if (investor.getHashMap().size() > maxFundForInvestor) {
-				throw new TooManyListenersException("can't save. The max funds for investor is: " + maxFundForInvestor);
+				throw new TooManyFundsForInvestor("can't save. The max funds for investor is: " + maxFundForInvestor);
 			}
 		}
 		// check min stock initial price
@@ -80,7 +80,7 @@ public class InvestmentService implements Manageable {
 		if (t instanceof Investor) {
 			Investor investor = (Investor) t;
 			if (investor.getHashMap().size() > maxFundForInvestor) {
-				throw new TooManyListenersException("can't save. The max funds for investor is: " + maxFundForInvestor);
+				throw new TooManyFundsForInvestor("can't save. The max funds for investor is: " + maxFundForInvestor);
 			}
 		}
 		dao.update(t);
