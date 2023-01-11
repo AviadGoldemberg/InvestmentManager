@@ -9,10 +9,11 @@
 
 	<!-- Define your beans here -->
 	<context:component-scan
-		base-package="com.javaspring" />
-	<bean id="invetmentService" class = "investmentmanager.service.InvestmentService"
-	init-method = "whenIsUp" destroy-method = "whenIsDown">
-	<property name = "dao" value = "investmentmanager.dao.InvestmentManagerFileDao"></property>
+		base-package="investmentmanager" />
+	<bean id="investmentService"
+		class="investmentmanager.service.InvestmentService"
+		init-method="whenIsUp" destroy-method="whenIsDown">
+
 	</bean>
 </beans>
 	

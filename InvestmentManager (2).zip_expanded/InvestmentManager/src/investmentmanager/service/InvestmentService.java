@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.Cache;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,6 @@ import investmentmanager.entity.InvestmentFund;
 import investmentmanager.entity.Investor;
 import investmentmanager.entity.Stock;
 import investmentmanager.dal.InvestmentManagerFileDao;
-
 @Component
 @PropertySource("classpath:params.properties")
 public class InvestmentService implements Manageable {
@@ -44,15 +42,11 @@ public class InvestmentService implements Manageable {
 	@Override
 	public void save(Entity t) throws Exception {
 		// Checked not saved before
-
 		for (int i = 0; i <= InvestmentManagerFileDao.fund; i++) {
-			if (getAll(i) != null) {
-				for (Entity e : getAll(i)) {
-					if (e.equals(t)) {
-						throw new AlreadySavedEntityException(String.format("%s already saved.", t.toString()));
-					}
+			for (Entity e : getAll(i)) {
+				if (e.equals(t)) {
+					throw new AlreadySavedEntityException(String.format("%s already saved.", t.toString()));
 				}
-
 			}
 		}
 		// check if investor above max funds for investor
@@ -103,11 +97,7 @@ public class InvestmentService implements Manageable {
 	// when the container is up
 	public void whenIsUp() throws Exception {
 		System.out.println("Hello fellow user!");
-		try {
-			printAllEntities();
-		} catch (Exception e) {
-
-		}
+		printAllEntities();
 	}
 
 	// when the container is down

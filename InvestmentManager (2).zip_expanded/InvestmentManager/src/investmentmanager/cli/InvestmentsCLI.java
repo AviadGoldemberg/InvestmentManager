@@ -32,11 +32,11 @@ public class InvestmentsCLI {
 		while (userInput != 0)
 		{
 			// print options
-			System.out.println("Enter 1 to show entity list.");
-			System.out.println("Enter 2 to show specific entity.");
-			System.out.println("Enter 3 to add entity.");
-			System.out.println("Enter 4 to update entity.");
-			System.out.println("Enter 5 to delete entity.");
+			System.out.println("Enter 1 to show task list.");
+			System.out.println("Enter 2 to show single task.");
+			System.out.println("Enter 3 to add task.");
+			System.out.println("Enter 4 to update task.");
+			System.out.println("Enter 5 to delete task.");
 			System.out.println("Enter 0 to exit.");
 			System.out.println("Enter your choice: ");
 			// getting user input
@@ -56,12 +56,9 @@ public class InvestmentsCLI {
 						System.out.println("Invalid choice");
 					}
 					// print all entities
-					if (investmentManager.getAll(code) != null) {
-						for (Entity entity : investmentManager.getAll(code)) {
-							System.out.println(entity);
-						}
+					for (Entity entity : investmentManager.getAll(code)) {
+						System.out.println(entity);
 					}
-					
 					break;
 				case GET_ENTITY:
 					// returns an entity

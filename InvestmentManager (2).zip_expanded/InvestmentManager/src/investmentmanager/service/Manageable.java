@@ -1,12 +1,10 @@
-package investmentmanager.dal;
-import investmentmanager.entity.Entity;
+package investmentmanager.service;
+
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import investmentmanager.entity.Entity;
 
-public interface InvestmentManagerDao {
-	//al - ArrayList
-	
+public interface Manageable {
 	//returns all of the al's in the file
 	public List<Entity> getAll(int id) throws Exception;
 	
@@ -21,6 +19,5 @@ public interface InvestmentManagerDao {
 	
 	//returns an item from a certain al in the file
 	public Entity get(int idm, Class c) throws Exception;
-
 
 }

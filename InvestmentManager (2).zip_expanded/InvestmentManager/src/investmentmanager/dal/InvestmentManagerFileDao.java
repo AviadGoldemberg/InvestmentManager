@@ -1,6 +1,5 @@
 package investmentmanager.dal;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +13,10 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 // import the entities
+import investmentmanager.entity.Investor;
+import investmentmanager.entity.Stock;
 import investmentmanager.entity.Entity;
+import investmentmanager.entity.InvestmentFund;
 
 @Component
 public class InvestmentManagerFileDao implements InvestmentManagerDao {
@@ -57,32 +59,27 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 
 	public ArrayList<Entity> readFromFile(int id) throws Exception {
 		// this func reads from the file the arraylist
-		
+
 		// there are three possible lists to pull from three possible files
 		ArrayList<Entity> al = new ArrayList<Entity>();
-		
-		String file_name = GiveFileNameFromId(id);
-		if (file_name != null) {
-			File yourFile = new File(file_name);
-			yourFile.createNewFile(); // if file already exists will do nothing 
-			try {
-				FileInputStream fis = new FileInputStream(file_name);
-				ObjectInputStream ois = new ObjectInputStream(fis);
-				al = (ArrayList<Entity>) ois.readObject();
-				ois.close();
-				fis.close();
 
-			} catch (IOException ioe) {
-				return null;
-			} catch (ClassNotFoundException cnfe) {
-				System.out.println("Class Not Found");
-				return null;
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+		String file_name = GiveFileNameFromId(id);
+
+		try {
+			FileInputStream fis = new FileInputStream(file_name);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			al = (ArrayList<Entity>) ois.readObject();
+			ois.close();
+			fis.close();
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("Class Not Found");
+			cnfe.printStackTrace();
+			return null;
 		}
-		
 
 		// if succeeded now in al is the arraylist with all of the entities
 		return al;
@@ -90,21 +87,19 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 
 	public void writeToFile(ArrayList<Entity> al) throws Exception {
 		// this func writes to the file the arraylist
-		
+
 		Entity e = al.get(0);
 		String file_name = GiveFileNameFromId(GiveIdFromEntity(e.getClass()));
-		if (file_name != null) {
-			try {
-				FileOutputStream fos = new FileOutputStream(file_name);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(al);
-				oos.close();
-				fos.close();
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
+
+		try {
+			FileOutputStream fos = new FileOutputStream(file_name);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(al);
+			oos.close();
+			fos.close();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
-		
 	}
 
 	@Override
@@ -122,13 +117,10 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 		// 0 - Stock
 		// 1 - Investor
 		// 2 - InvestmentFund
-		
+
 		// reading the correct al from the files
 		ArrayList<Entity> entityList = (ArrayList<Entity>) getAll(GiveIdFromEntity(t.getClass()));
 		// adding the new entity to the al
-		if (entityList == null) {
-			entityList = new ArrayList<>();
-		}
 		entityList.add(t);
 		Collections.sort(entityList);
 		// writing to the file the new arrayList
