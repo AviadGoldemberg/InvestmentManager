@@ -23,4 +23,6 @@ public interface InvestmentManagerDao {
 	public Entity get(int idm, Class c) throws Exception;
 
 
+	public int GetStaticId(int id) throws Exception;
+	
 }

@@ -84,4 +84,9 @@ public class InvestmentFund extends Entity{
 		return calculateFundPrice();
 	}
 
+	public static void initIdCounter(int counter) {
+		idCounter = counter;
+		
+	}
+
 }

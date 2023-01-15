@@ -18,4 +18,5 @@ public abstract class Entity implements Comparable<Entity>,Serializable {
 		}
 		return -1;
 	}
+	
 }

@@ -50,7 +50,7 @@ public class InvestmentsCLI {
 				case SHOW_ENTITYS:
 					
 					// get id and print all entities
-					System.out.println("Enter entity:\n1 to stock\n2 to investor\n3 to fund");
+					System.out.println("Enter entity:\n0 to stock\n1 to investor\n2 to fund");
 					code = scanner.nextInt();
 					if (code < 0 || code > 3) {
 						System.out.println("Invalid choice");
@@ -111,6 +111,7 @@ public class InvestmentsCLI {
 					case InvestmentManagerFileDao.fund:
 						//fund
 						e = new InvestmentFund();
+						break;
 					default:
 						System.out.println("Please enter valid input.");
 						break;

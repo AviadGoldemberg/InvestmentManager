@@ -13,6 +13,7 @@ public class Investor extends Entity {
 	private double availableMoney;
 
 	public Investor(String name, double money) throws NegativeInitialMoneyException {
+		
 		this.name = name;
 		if(money < 0 )
 			throw new NegativeInitialMoneyException("The initial money of investor can't be negative.");
@@ -102,6 +103,11 @@ public class Investor extends Entity {
 	
 	public HashMap<InvestmentFund, Integer> getHashMap(){
 		return investments;
+	}
+
+
+	public static void initIdCounter(int counter) {
+		idCounter = counter;
 	}
 
 }

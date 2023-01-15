@@ -104,9 +104,12 @@ public class InvestmentService implements Manageable {
 	public void whenIsUp() throws Exception {
 		System.out.println("Hello fellow user!");
 		try {
+			Stock.initIdCounter(dao.GetStaticId(0));
+			Investor.initIdCounter(dao.GetStaticId(1));
+			InvestmentFund.initIdCounter(dao.GetStaticId(2));
 			printAllEntities();
 		} catch (Exception e) {
-
+			e.getStackTrace();
 		}
 	}
 

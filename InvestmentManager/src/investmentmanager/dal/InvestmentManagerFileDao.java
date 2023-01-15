@@ -1,11 +1,14 @@
 package investmentmanager.dal;
 
+import java.awt.geom.GeneralPath;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream.GetField;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +18,9 @@ import org.springframework.stereotype.Component;
 
 // import the entities
 import investmentmanager.entity.Entity;
+import investmentmanager.entity.InvestmentFund;
+import investmentmanager.entity.Investor;
+import investmentmanager.entity.Stock;
 
 @Component
 public class InvestmentManagerFileDao implements InvestmentManagerDao {
@@ -26,6 +32,8 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 	public static final int stock = 0;
 	public static final int investor = 1;
 	public static final int fund = 2;
+	
+	public static int classId = 0;
 
 	/*
 	 * stock = 0; investor = 1; fund = 2;
@@ -42,13 +50,20 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 
 		return file_name;
 	}
-
+	@Override
+	public int GetStaticId(int id) throws Exception {
+		ArrayList<Entity> arrayList = readFromFile(id);
+		if(arrayList == null) return 0;
+		return readFromFile(id).size();
+	}
+	
+	
 	private int GiveIdFromEntity(Class c) {
-		if (c.getClass() == c)
+		if (Stock.class == c)
 			return 0;
-		else if (c.getClass() == c)
+		else if (Investor.class == c)
 			return 1;
-		else if (c.getClass() == c)
+		else if (InvestmentFund.class == c)
 			return 2;
 
 		return -1;
@@ -89,20 +104,23 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 	}
 
 	public void writeToFile(ArrayList<Entity> al) throws Exception {
+		if(al.isEmpty()) {
+			String file_name = GiveFileNameFromId(classId);
+			FileWriter file = new FileWriter(file_name);
+			file.write("");
+			return;
+		}
 		// this func writes to the file the arraylist
-		
 		Entity e = al.get(0);
 		String file_name = GiveFileNameFromId(GiveIdFromEntity(e.getClass()));
-		if (file_name != null) {
-			try {
-				FileOutputStream fos = new FileOutputStream(file_name);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(al);
-				oos.close();
-				fos.close();
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
+		try {
+			FileOutputStream fos = new FileOutputStream(file_name);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(al);
+			oos.close();
+			fos.close();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 		
 	}
@@ -163,7 +181,8 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 
 		ArrayList<Entity> entityList = (ArrayList<Entity>) getAll(GiveIdFromEntity(c));
 		;
-
+		
+		classId = GiveIdFromEntity(entityList.get(0).getClass());
 		for (int i = 0; i < entityList.size(); i++) {
 			if (entityList.get(i).getId() == id) {
 				entityList.remove(i);

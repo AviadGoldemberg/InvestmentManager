@@ -2,6 +2,10 @@ package investmentmanager.entity;
 
 import java.util.Objects;
 import java.util.Random;
+
+import org.springframework.beans.factory.InitializingBean;
+
+import investmentmanager.dal.InvestmentManagerFileDao;
 /*Class for stock*/
 public class Stock extends Entity{
 	private static int idCounter = 0;
@@ -9,7 +13,7 @@ public class Stock extends Entity{
 	private int stockId;
 	private String company;
 	private double risk;
-	private static Random rnd;
+	private static Random rnd = new Random();
 
 	public Stock(String company, double initialPrice, double stockRisk) {
 		stockId = idCounter;
@@ -17,8 +21,6 @@ public class Stock extends Entity{
 		this.company = company;
 		price = initialPrice;
 		risk = stockRisk;
-		rnd = new Random();
-
 	}
 
 	@Override
@@ -72,5 +74,13 @@ public class Stock extends Entity{
 	public double getValue() {
 		return price;
 	}
+
+	
+	public static void initIdCounter(int counter) {
+		idCounter = counter;
+		
+	}
+	
+
 
 }
