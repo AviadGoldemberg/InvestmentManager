@@ -54,7 +54,14 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 	public int GetStaticId(int id) throws Exception {
 		ArrayList<Entity> arrayList = readFromFile(id);
 		if(arrayList == null) return 0;
-		return readFromFile(id).size();
+		Entity maxEntity = arrayList.get(0);
+		for (Entity entity : arrayList) {
+			if (entity.getId() > maxEntity.getId()) {
+				maxEntity = entity;
+			}
+		}
+		
+		return maxEntity.getId() + 1;
 	}
 	
 	
@@ -180,7 +187,7 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 	public void delete(int id, Class c) throws Exception {
 
 		ArrayList<Entity> entityList = (ArrayList<Entity>) getAll(GiveIdFromEntity(c));
-		;
+		
 		
 		classId = GiveIdFromEntity(entityList.get(0).getClass());
 		for (int i = 0; i < entityList.size(); i++) {
@@ -197,8 +204,8 @@ public class InvestmentManagerFileDao implements InvestmentManagerDao {
 	public Entity get(int id, Class c) throws Exception {
 
 		ArrayList<Entity> entityList = (ArrayList<Entity>) getAll(GiveIdFromEntity(c));
-		;
-
+		if (entityList == null) 		
+			throw new EntityNotExistInSystemException("Id not exist --> " + id + " of entity --> " + c.getClass());
 		for (int i = 0; i < entityList.size(); i++) {
 			if (entityList.get(i).getId() == id) {
 				return (Entity) entityList.get(i);

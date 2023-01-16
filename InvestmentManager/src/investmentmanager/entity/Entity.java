@@ -2,7 +2,7 @@ package investmentmanager.entity;
 
 import java.io.Serializable;
 
-public abstract class Entity implements Comparable<Entity>,Serializable {
+public abstract class Entity implements Comparable<Entity>,Serializable{
 	
 	public abstract int getId();
 	public abstract double getValue();
@@ -18,5 +18,8 @@ public abstract class Entity implements Comparable<Entity>,Serializable {
 		}
 		return -1;
 	}
+	
+
+
 	
 }

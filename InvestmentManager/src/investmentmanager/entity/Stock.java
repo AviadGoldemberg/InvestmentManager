@@ -6,8 +6,9 @@ import java.util.Random;
 import org.springframework.beans.factory.InitializingBean;
 
 import investmentmanager.dal.InvestmentManagerFileDao;
+
 /*Class for stock*/
-public class Stock extends Entity{
+public class Stock extends Entity {
 	private static int idCounter = 0;
 	private double price;
 	private int stockId;
@@ -27,8 +28,6 @@ public class Stock extends Entity{
 	public String toString() {
 		return "Stock [price=" + price + ", stockId=" + stockId + ", company=" + company + ", risk=" + risk + "]";
 	}
-
-	
 
 	@Override
 	public int hashCode() {
@@ -56,6 +55,10 @@ public class Stock extends Entity{
 		return price;
 	}
 
+	public void setPrice(double d) {
+		this.price = d;
+	}
+
 	public double getRisk() {
 		return risk;
 	}
@@ -63,7 +66,6 @@ public class Stock extends Entity{
 	public String getCompany() {
 		return company;
 	}
-
 
 	@Override
 	public int getId() {
@@ -75,12 +77,9 @@ public class Stock extends Entity{
 		return price;
 	}
 
-	
 	public static void initIdCounter(int counter) {
 		idCounter = counter;
-		
-	}
-	
 
+	}
 
 }

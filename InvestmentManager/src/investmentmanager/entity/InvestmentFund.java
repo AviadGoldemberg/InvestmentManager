@@ -1,6 +1,8 @@
 package investmentmanager.entity;
 
+import java.io.ObjectOutputStream.PutField;
 import java.util.HashMap;
+import java.util.Objects;
 
 /*Investment fund class*/
 public class InvestmentFund extends Entity{
@@ -19,7 +21,11 @@ public class InvestmentFund extends Entity{
 		stocks.put(stock, amount);
 	}
 
-	//equals method
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -68,7 +74,13 @@ public class InvestmentFund extends Entity{
 		return id;
 	}
 
-
+	public void updateStocks(Stock stock) {
+		int amount = stocks.get(stock);
+		if (stocks.containsKey(stock)) {
+			stock.setPrice(stock.getPrice());
+			stocks.put(stock, amount);
+		} 
+	}
 	@Override
 	public String toString() {
 		String str = "stocks = ";

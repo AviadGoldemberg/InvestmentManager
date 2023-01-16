@@ -2,6 +2,7 @@ package investmentmanager.entity;
 
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 /*Investor class*/
 public class Investor extends Entity {
@@ -58,10 +59,10 @@ public class Investor extends Entity {
 				availableMoney += fund.calculateFundPrice() * units;
 				investments.remove(fund);
 			} else {
-				throw new NotEnoughUnitsException(name + " doesn't has "+  units + " to sell.");
+				throw new NotEnoughUnitsException(name + " doesn't have " +  units + " to sell.");
 			}
 		} else {
-			throw new FundNotExistException(name + " doesn't has any units in this fund");
+			throw new FundNotExistException(name + " doesn't have any units in this fund");
 		}
 	}
 
@@ -70,6 +71,14 @@ public class Investor extends Entity {
 		return name;
 	}
 
+	public void updateFund(InvestmentFund fund) {
+		int amount = investments.get(fund);
+		if (investments.containsKey(fund)) {
+			investments.remove(fund);
+			investments.put(fund, amount);
+		}
+		
+	}
 
 	@Override
 	public String toString() {
@@ -88,6 +97,7 @@ public class Investor extends Entity {
 		Investor other = (Investor) obj;
 		return investorId == other.investorId;
 	}
+
 
 	
 
